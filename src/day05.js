@@ -2,8 +2,8 @@ const fs = require("node:fs");
 const input = fs.readFileSync("input/day05.txt", "utf-8");
 
 let [input1, input2] = input
-  .split("\n\n")
-  .map((section) => section.split("\n"));
+  .split(/(?:\r?\n){2,}/)
+  .map((section) => section.split(/\r?\n/));
 
 const rules = input1.map((rule) => rule.split("|"));
 const updates = input2.map((update) => update.split(","));

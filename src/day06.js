@@ -1,13 +1,13 @@
 const fs = require("node:fs");
 const input = fs.readFileSync("input/day06.txt", "utf-8");
 
-const map = input.split("\n").map((line) => line.split(""));
+const map = input.split(/\r?\n/).map((line) => line.split(""));
 
 const isInMap = (x, y) => {
   return x >= 0 && x < map[0].length && y >= 0 && y < map.length;
 };
 
-const start = input.replaceAll("\n", "").indexOf("^");
+const start = input.replaceAll(/\r?\n/g, "").indexOf("^");
 const xStart = start % map[0].length;
 const yStart = Math.floor(start / map.length);
 

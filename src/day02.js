@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const input = fs.readFileSync("input/day02.txt", "utf-8");
 
 const reports = input
-  .split("\n")
+  .split(/\r?\n/)
   .map((line) => line.split(" ").map((value) => parseInt(value)));
 
 const isReportSafe = (levels) => {
@@ -19,7 +19,7 @@ const isReportSafe = (levels) => {
     }
   }
   return true;
-}
+};
 
 // part 1
 

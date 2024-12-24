@@ -1,10 +1,10 @@
 const fs = require("node:fs");
 const input = fs.readFileSync("input/day08.txt", "utf-8");
 
-const length = input.split("\n").length;
+const length = input.split(/\r?\n/).length;
 
 const antennas = input
-  .split("\n")
+  .split(/\r?\n/)
   .map((line, i) =>
     [...line.matchAll(/[a-zA-Z0-9]/g)].map((regExpExecArray) => ({
       i,

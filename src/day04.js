@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const input = fs.readFileSync("input/day04.txt", "utf-8");
 
-const x = input.split("\n").map((line) => line.split(""));
+const x = input.split(/\r?\n/).map((line) => line.split(""));
 
 // part 1
 

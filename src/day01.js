@@ -3,7 +3,7 @@ const input = fs.readFileSync("input/day01.txt", "utf-8");
 
 const list1 = [];
 const list2 = [];
-input.split("\n").forEach((line) => {
+input.split(/\r?\n/).forEach((line) => {
   var nums = line.split(/ +/);
   list1.push(parseInt(nums[0]));
   list2.push(parseInt(nums[1]));
@@ -35,4 +35,4 @@ for (let i = 0; i < list1.length; i++) {
     j++;
   }
 }
-console.log(similarity)
+console.log(similarity);

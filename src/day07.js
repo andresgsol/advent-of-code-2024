@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const input = fs.readFileSync("input/day07.txt", "utf-8");
 
 const equations = input
-  .split("\n")
+  .split(/\r?\n/)
   .map((line) => line.split(": "))
   .map((pair) => {
     return { target: Number(pair[0]), values: pair[1].split(" ").map(Number) };
