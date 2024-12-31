@@ -1,8 +1,13 @@
 # Advent of Code 2024
-My solutions to https://adventofcode.com/2024
+My solutions to https://adventofcode.com/2024, written in TypeScript and running on tsx.
+
+## Setup
+```bash
+npm install
+```
 
 ## How to run
-Assuming `input/dayXX.txt` exists:
+Input files: `input/dayXX.txt`.
 ```bash
-node src/dayXX.js
+npx tsx src/dayXX.js
 ```
