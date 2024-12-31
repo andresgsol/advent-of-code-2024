@@ -1,5 +1,5 @@
-const fs = require("node:fs");
-const input = fs.readFileSync("input/day05.txt", "utf-8");
+import { readFileSync } from "node:fs";
+const input = readFileSync("input/day05.txt", "utf-8");
 
 let [input1, input2] = input
   .split(/(?:\r?\n){2,}/)
@@ -8,10 +8,10 @@ let [input1, input2] = input
 const rules = input1.map((rule) => rule.split("|"));
 const updates = input2.map((update) => update.split(","));
 
-const isCorrect = (page1, page2) =>
-  !rules.some((rule) => rule[0] == page2 && rule[1] == page1);
+const isCorrect = (page1: string, page2: string) =>
+  !rules.some((rule) => rule[0] === page2 && rule[1] === page1);
 
-const middleSum = (list) =>
+const middleSum = (list: string[][]) =>
   list
     .map((update) => +update[Math.floor(update.length / 2)])
     .reduce((prev, curr) => prev + curr, 0);
@@ -41,4 +41,4 @@ const fixedUpdates = incorrectUpdates.map((update) =>
   update.sort((a, b) => -isCorrect(a, b) + 0.5)
 );
 
-result = console.log(middleSum(fixedUpdates));
+console.log(middleSum(fixedUpdates));
