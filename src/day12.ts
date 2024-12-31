@@ -1,23 +1,26 @@
-const fs = require("node:fs");
-const input = fs.readFileSync("input/day12.txt", "utf-8");
+import { readFileSync } from "node:fs";
+const input = readFileSync("input/day12.txt", "utf-8");
 
 class Plot {
-  constructor(i, j) {
-    this.i = i;
-    this.j = j;
+  constructor(public i: number, public j: number) {}
+
+  equals(plot: Plot): boolean {
+    return this.i === plot.i && this.j === plot.j;
   }
-  equals = (plot) => this.i === plot.i && this.j === plot.j;
 }
 
 class Crop {
-  constructor() {
-    this.plots = [];
+  plots: Plot[] = [];
+
+  contains(plot: Plot): boolean {
+    return this.plots.some((existingPlot) => existingPlot.equals(plot));
   }
-  contains = (plot1) => this.plots.some((plot2) => plot1.equals(plot2));
 }
 
-const getAdjacent = (plot, map) => {
-  const adjacent = [];
+type MapType = string[][];
+
+const getAdjacent = (plot: Plot, map: MapType): Plot[] => {
+  const adjacent: Plot[] = [];
 
   plot.i - 1 >= 0 && adjacent.push(new Plot(plot.i - 1, plot.j));
   plot.i + 1 < map.length && adjacent.push(new Plot(plot.i + 1, plot.j));
@@ -28,7 +31,7 @@ const getAdjacent = (plot, map) => {
   return adjacent;
 };
 
-const populateCrop = (crop, map, plot) => {
+const populateCrop = (crop: Crop, map: MapType, plot: Plot): void => {
   if (crop.contains(plot)) {
     return;
   }
@@ -38,40 +41,48 @@ const populateCrop = (crop, map, plot) => {
     .forEach((plot2) => populateCrop(crop, map, plot2));
 };
 
-const area = (crop) => crop.plots.length;
+const area = (crop: Crop): number => crop.plots.length;
 
-const countContiguous = (plot, map) =>
+const countContiguous = (plot: Plot, map: MapType): number =>
   getAdjacent(plot, map).filter(
     (plot2) => map[plot.i][plot.j] === map[plot2.i][plot2.j]
   ).length;
 
-const perimeter = (crop, map) =>
+const perimeter = (crop: Crop, map: MapType): number =>
   crop.plots.reduce((count, plot) => count + 4 - countContiguous(plot, map), 0);
 
-const isSame = (plot, other, map) => {
-  return (
-    other.i >= 0 &&
-    other.i < map.length &&
-    other.j >= 0 &&
-    other.j < map[other.i].length &&
-    map[other.i][other.j] === map[plot.i][plot.j]
-  );
-};
+const isSame = (plot: Plot, other: Plot, map: MapType): boolean =>
+  other.i >= 0 &&
+  other.i < map.length &&
+  other.j >= 0 &&
+  other.j < map[other.i].length &&
+  map[other.i][other.j] === map[plot.i][plot.j];
 
-const isConvexCorner = (map, plot, adj1, adj2) => {
+const isConvexCorner = (
+  map: MapType,
+  plot: Plot,
+  adj1: Plot,
+  adj2: Plot
+): boolean => {
   const sameAdj1 = isSame(plot, adj1, map);
   const sameAdj2 = isSame(plot, adj2, map);
   return !sameAdj1 && !sameAdj2;
 };
 
-const isConcaveCorner = (map, plot, adj1, adj2, diag) => {
+const isConcaveCorner = (
+  map: MapType,
+  plot: Plot,
+  adj1: Plot,
+  adj2: Plot,
+  diag: Plot
+): boolean => {
   const sameAdj1 = isSame(plot, adj1, map);
   const sameAdj2 = isSame(plot, adj2, map);
   const sameDiag = isSame(plot, diag, map);
   return sameAdj1 && sameAdj2 && !sameDiag;
 };
 
-const countCorners = (plot, map) => {
+const countCorners = (plot: Plot, map: MapType): number => {
   let corners = 0;
 
   isConvexCorner(
@@ -131,10 +142,10 @@ const countCorners = (plot, map) => {
   return corners;
 };
 
-const sides = (crop, map) =>
+const sides = (crop: Crop, map: MapType): number =>
   crop.plots.reduce((count, plot) => count + countCorners(plot, map), 0);
 
-const part1 = (map, crops) => {
+const part1 = (map: MapType, crops: Crop[]): void => {
   const price = crops.reduce(
     (total, crop) => total + area(crop) * perimeter(crop, map),
     0
@@ -142,7 +153,7 @@ const part1 = (map, crops) => {
   console.log(price);
 };
 
-const part2 = (map, crops) => {
+const part2 = (map: MapType, crops: Crop[]): void => {
   const price = crops.reduce(
     (total, crop) => total + area(crop) * sides(crop, map),
     0
@@ -150,9 +161,9 @@ const part2 = (map, crops) => {
   console.log(price);
 };
 
-const map = input.split(/\r?\n/).map((line) => line.split(""));
+const map: MapType = input.split(/\r?\n/).map((line) => line.split(""));
 
-const crops = [];
+const crops: Crop[] = [];
 map.forEach((line, i) =>
   line.forEach((_, j) => {
     const plot = new Plot(i, j);

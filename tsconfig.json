@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "noImplicitOverride": true
+    "target": "ES2021",
+    "strict": true
   }
 }

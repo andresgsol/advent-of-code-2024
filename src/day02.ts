@@ -1,16 +1,16 @@
-const fs = require("node:fs");
-const input = fs.readFileSync("input/day02.txt", "utf-8");
+import { readFileSync } from "node:fs";
+const input = readFileSync("input/day02.txt", "utf-8");
 
 const reports = input
   .split(/\r?\n/)
   .map((line) => line.split(" ").map((value) => parseInt(value)));
 
-const isReportSafe = (levels) => {
+const isReportSafe = (levels: number[]) => {
   if (levels.length < 2) {
     return true;
   }
   if (levels[0] > levels[1]) {
-    levels.reverse();
+    levels = [...levels].reverse();
   }
   for (let i = 1; i < levels.length; i++) {
     const diff = levels[i] - levels[i - 1];

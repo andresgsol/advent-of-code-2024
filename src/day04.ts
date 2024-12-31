@@ -1,48 +1,49 @@
-const fs = require("node:fs");
-const input = fs.readFileSync("input/day04.txt", "utf-8");
+import { readFileSync } from "node:fs";
+const input = readFileSync("input/day04.txt", "utf-8");
 
 const x = input.split(/\r?\n/).map((line) => line.split(""));
 
 // part 1
 
-const isForwards = (x, i, j) =>
+const isForwards = (x: string[][], i: number, j: number) =>
   j + 3 < x[i].length && isXmas(x[i][j], x[i][j + 1], x[i][j + 2], x[i][j + 3])
     ? 1
     : 0;
-const isBackwards = (x, i, j) =>
+const isBackwards = (x: string[][], i: number, j: number) =>
   j - 3 >= 0 && isXmas(x[i][j], x[i][j - 1], x[i][j - 2], x[i][j - 3]) ? 1 : 0;
-const isDownwards = (x, i, j) =>
+const isDownwards = (x: string[][], i: number, j: number) =>
   i + 3 < x.length && isXmas(x[i][j], x[i + 1][j], x[i + 2][j], x[i + 3][j])
     ? 1
     : 0;
-const isUpwards = (x, i, j) =>
+const isUpwards = (x: string[][], i: number, j: number) =>
   i - 3 >= 0 && isXmas(x[i][j], x[i - 1][j], x[i - 2][j], x[i - 3][j]) ? 1 : 0;
-const isDiagonalUpLeft = (x, i, j) =>
+const isDiagonalUpLeft = (x: string[][], i: number, j: number) =>
   i - 3 >= 0 &&
   j - 3 >= 0 &&
   isXmas(x[i][j], x[i - 1][j - 1], x[i - 2][j - 2], x[i - 3][j - 3])
     ? 1
     : 0;
-const isDiagonalUpRight = (x, i, j) =>
+const isDiagonalUpRight = (x: string[][], i: number, j: number) =>
   i - 3 >= 0 &&
   j + 3 < x[i].length &&
   isXmas(x[i][j], x[i - 1][j + 1], x[i - 2][j + 2], x[i - 3][j + 3])
     ? 1
     : 0;
-const isDiagonalDownLeft = (x, i, j) =>
+const isDiagonalDownLeft = (x: string[][], i: number, j: number) =>
   i + 3 < x.length &&
   j - 3 >= 0 &&
   isXmas(x[i][j], x[i + 1][j - 1], x[i + 2][j - 2], x[i + 3][j - 3])
     ? 1
     : 0;
-const isDiagonalDownRight = (x, i, j) =>
+const isDiagonalDownRight = (x: string[][], i: number, j: number) =>
   i + 3 < x.length &&
   j + 3 < x[i].length &&
   isXmas(x[i][j], x[i + 1][j + 1], x[i + 2][j + 2], x[i + 3][j + 3])
     ? 1
     : 0;
 
-const isXmas = (x, m, a, s) => x == "X" && m == "M" && a == "A" && s == "S";
+const isXmas = (x: string, m: string, a: string, s: string) =>
+  x === "X" && m === "M" && a === "A" && s === "S";
 
 let counter = 0;
 
@@ -64,7 +65,7 @@ console.log(counter);
 
 // part 2
 
-const isX_mas = (x, i, j) =>
+const isX_mas = (x: string[][], i: number, j: number) =>
   (isMas(x[i][j], x[i + 1][j + 1], x[i + 2][j + 2]) ||
     isMas(x[i + 2][j + 2], x[i + 1][j + 1], x[i][j])) &&
   (isMas(x[i][j + 2], x[i + 1][j + 1], x[i + 2][j]) ||
@@ -72,7 +73,8 @@ const isX_mas = (x, i, j) =>
     ? 1
     : 0;
 
-const isMas = (m, a, s) => m == "M" && a == "A" && s == "S";
+const isMas = (m: string, a: string, s: string) =>
+  m === "M" && a === "A" && s === "S";
 
 counter = 0;
 

@@ -1,5 +1,5 @@
-const fs = require("node:fs");
-const input = fs.readFileSync("input/day03.txt", "utf-8");
+import { readFileSync } from "node:fs";
+const input = readFileSync("input/day03.txt", "utf-8");
 
 // part 1
 
@@ -28,9 +28,9 @@ operations = [
 var isDo = true;
 result = 0;
 for (const operation of operations) {
-  if (operation.substring(0, 5) === "don't") {
+  if (operation.startsWith("don't")) {
     isDo = false;
-  } else if (operation.substring(0, 2) === "do") {
+  } else if (operation.startsWith("do")) {
     isDo = true;
   } else if (isDo) {
     const x = parseInt(operation.substring(4, operation.indexOf(",")));
